@@ -8,7 +8,7 @@ interface TaskItemProps {
 }
 
 export function TaskCard({ task }: TaskItemProps) {
-  const { toggleTask } = useTodo();
+  const { toggleTask, deleteTask } = useTodo();
 
   async function handleToggleTask() {
     try {
@@ -18,29 +18,39 @@ export function TaskCard({ task }: TaskItemProps) {
     }
   }
 
+  async function handleDeleteTask(){
+    // # TODO- Melhorar o alerta de confirmação de deleção e o alerta de erro
+    // # TODO- Alerta perguntando se deseja mesmo apagar a tarefa
+
+    try {
+      await deleteTask(task.id);
+      Alert.alert("Tarefa excluída", `A tarefa foi excluída com sucesso!`);
+    } catch (e) {
+      Alert.alert("Erro", 'Erro ao deletar a tarefa');
+    }
+  }
+
   return (
     <View className="flex-row items-center bg-neutral-100 rounded-lg p-3 mb-2 border border-neutral-300">
       <TouchableOpacity
-        className={`w-5 h-5 rounded-full border-2 items-center justify-center mr-3 ${
-          task.completed
-            ? "bg-green-600 border-green-600"
-            : "border-neutral-300"
-        }`}
+        className={`w-5 h-5 rounded-full border-2 items-center justify-center mr-3 ${task.completed
+          ? "bg-green-600 border-green-600"
+          : "border-neutral-300"
+          }`}
         onPress={handleToggleTask}
       >
         {task.completed ? <Check color="#FFFFFF" size={12} /> : null}
       </TouchableOpacity>
 
       <Text
-        className={`flex-1 text-sm leading-5 text-neutral-800 ${
-          task.completed ? "line-through text-neutral-500" : ""
-        }`}
+        className={`flex-1 text-sm leading-5 text-neutral-800 ${task.completed ? "line-through text-neutral-500" : ""
+          }`}
         numberOfLines={2}
       >
         {task.task}
       </Text>
 
-      <TouchableOpacity className="p-2">
+      <TouchableOpacity activeOpacity={.7} onPress={handleDeleteTask} className="p-2" >
         <Trash2 size={18} color="#808080" />
       </TouchableOpacity>
     </View>

@@ -8,6 +8,7 @@ interface TodoContextData {
   addTask: (task: string) => Promise<void>;
   getTasks: () => Promise<void>;
   toggleTask: (task: Task) => Promise<void>;
+  deleteTask: (id: number) => Promise<void>;
 }
 
 interface TodoProviderProps {
@@ -49,12 +50,17 @@ export function TodoProvider({ children }: TodoProviderProps) {
     getTasks();
   }
 
+  async function deleteTask(id: number) {
+    await todoDB.deleteTask(id);
+    getTasks()
+  }
+
   useEffect(() => {
     getTasks();
   }, []);
 
   return (
-    <TodoContext.Provider value={{ tasks, loading, addTask, getTasks, toggleTask }}>
+    <TodoContext.Provider value={{ tasks, loading, addTask, getTasks, toggleTask, deleteTask }}>
       {children}
     </TodoContext.Provider>
   )

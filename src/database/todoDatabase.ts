@@ -23,6 +23,13 @@ export function useTodoDatabase() {
         "UPDATE todos SET completed = ? WHERE id = ?",
         status, id
       )
+    },
+
+    async deleteTask(id: number) {
+      return await database.runAsync(
+        "DELETE FROM todos WHERE id = ?",
+        id
+      )
     }
   }
 }
