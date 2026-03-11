@@ -17,5 +17,12 @@ export function useTodoDatabase() {
         "SELECT * FROM todos ORDER BY id DESC"
       );
     },
+
+    async updateTaskStatus(id: number, status: number) {
+      return await database.runAsync(
+        "UPDATE todos SET completed = ? WHERE id = ?",
+        status, id
+      )
+    }
   }
 }

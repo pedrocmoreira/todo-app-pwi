@@ -18,8 +18,7 @@ export default function Index() {
         {tasks ? tasks.map((task) => (
           <TaskCard
             key={task.id}
-            text={task.task}
-            isCompleted={task.completed === 1 ? true : false}
+            task={task}
           />
         )) : <Text>Sem tasks por enquanto</Text>}
       </View>
