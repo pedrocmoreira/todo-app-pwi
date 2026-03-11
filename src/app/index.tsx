@@ -1,11 +1,13 @@
-
 import { Header } from "@/components/header";
 import { TaskCard } from "@/components/task-card";
 import { TodoInput } from "@/components/todo-input";
-import { View } from "react-native";
+import { useTodo } from "@/contexts/TodoContext";
+import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
+  const { tasks } = useTodo();
+
   return (
     <SafeAreaView>
       <Header />
@@ -13,11 +15,13 @@ export default function Index() {
       <View className="p-4">
         <TodoInput />
 
-        <TaskCard 
-          text="Texto teste"
-          isCompleted={false}
-
-        />
+        {tasks ? tasks.map((task) => (
+          <TaskCard
+            key={task.id}
+            text={task.task}
+            isCompleted={task.completed === 1 ? true : false}
+          />
+        )) : <Text>Sem tasks por enquanto</Text>}
       </View>
     </SafeAreaView>
   );
