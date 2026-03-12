@@ -19,9 +19,6 @@ export function TaskCard({ task }: TaskItemProps) {
   }
 
   async function handleDeleteTask(){
-    // # TODO- Melhorar o alerta de confirmação de deleção e o alerta de erro
-    // # TODO- Alerta perguntando se deseja mesmo apagar a tarefa
-
     try {
       await deleteTask(task.id);
       Alert.alert("Tarefa excluída", `A tarefa foi excluída com sucesso!`);
